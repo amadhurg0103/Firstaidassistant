@@ -10,6 +10,7 @@ import SwiftUI
 
 struct QuizView: View {
     @State private var selectedAnswer: Int? = nil
+    @State private var showFeedback: Bool = false
     
     var body: some View {
         VStack(spacing: 20) {
@@ -28,6 +29,7 @@ struct QuizView: View {
                 ForEach(0..<4) { index in
                     Button(action: {
                         selectedAnswer = index
+                        showFeedback = true
                     }) {
                         Text("Option \(index + 1)")
                             .font(.headline)
@@ -40,6 +42,18 @@ struct QuizView: View {
                 }
             }
             .padding(.horizontal)
+            
+            if showFeedback {
+                Text(selectedAnswer == 0 ? "Correct! 🎉" : "Incorrect! 😢")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(selectedAnswer == 0 ? Color(hex: "#34C759") : Color(hex: "#D32F2F")) // Green or red
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(10)
+                    .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
+                    .transition(.scale)
+            }
             
             Spacer()
         }

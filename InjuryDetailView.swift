@@ -8,6 +8,12 @@ import SwiftUI
 
 struct InjuryDetailView: View {
     let injury: String
+    @State private var isCompleted: Bool
+    
+    init(injury: String, isCompleted: Bool = false) {
+        self.injury = injury
+        self._isCompleted = State(initialValue: isCompleted)
+    }
     
     var body: some View {
         ScrollView {
@@ -38,6 +44,19 @@ struct InjuryDetailView: View {
                     .cornerRadius(10)
                     .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: 2)
                 }
+                
+                Button(action: {
+                    isCompleted.toggle()
+                }) {
+                    Text(isCompleted ? "Completed ✅" : "Mark as Completed")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(isCompleted ? Color(hex: "#34C759") : Color(hex: "#FF3B30")) // Green or red
+                        .cornerRadius(10)
+                }
+                .padding(.horizontal)
             }
             .padding()
         }
